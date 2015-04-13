@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.TempLoss;
 
@@ -18,6 +19,7 @@ public class TempLossDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<TempLoss> getAllTempLoss() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class TempLossDao extends HibernateDaoSupport
 	 * @param TempLoss
 	 * @return
 	 */
+	@Transactional
 	public String saveTempLoss(TempLoss TempLoss) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(TempLoss);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

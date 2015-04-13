@@ -27,6 +27,7 @@ public class AreaDao extends HibernateDaoSupport
 			@SuppressWarnings("unchecked")
 			List<Area> areaList=this.getHibernateTemplate().find("from Area");
 			this.getHibernateTemplate().flush();
+			
 			return areaList;
 		}
 		catch(Exception e)

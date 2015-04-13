@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Level;
 
@@ -18,6 +19,7 @@ public class LevelDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Level> getAllLevel() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class LevelDao extends HibernateDaoSupport
 	 * @param Level
 	 * @return
 	 */
+	@Transactional
 	public String saveLevel(Level Level) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Level);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

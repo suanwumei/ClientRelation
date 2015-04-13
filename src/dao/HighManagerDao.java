@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.HighManager;
 
@@ -18,6 +19,7 @@ public class HighManagerDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<HighManager> getAllHighManager() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class HighManagerDao extends HibernateDaoSupport
 	 * @param HighManager
 	 * @return
 	 */
+	@Transactional
 	public String saveHighManager(HighManager HighManager) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(HighManager);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

@@ -1,7 +1,10 @@
 package dao;
 import java.sql.SQLException;
 import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
+
 import domain.Client;
 
 /**
@@ -16,6 +19,7 @@ public class ClientDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Client> getAllClient() throws SQLException
 	{
 		try
@@ -37,11 +41,13 @@ public class ClientDao extends HibernateDaoSupport
 	 * @param Client
 	 * @return
 	 */
+	@Transactional
 	public String saveClient(Client Client) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Client);
+			this.getHibernateTemplate().flush();
 			return "success";
 		}
 		catch(Exception e)
@@ -57,6 +63,7 @@ public class ClientDao extends HibernateDaoSupport
 	 * @param name
 	 * @return
 	 */
+	@Transactional
 	public Client getClientByName(String name)
 	{
 		try

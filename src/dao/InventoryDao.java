@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Inventory;
 
@@ -18,6 +19,7 @@ public class InventoryDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Inventory> getAllInventory() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class InventoryDao extends HibernateDaoSupport
 	 * @param Inventory
 	 * @return
 	 */
+	@Transactional
 	public String saveInventory(Inventory Inventory) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Inventory);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

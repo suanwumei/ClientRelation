@@ -1,7 +1,9 @@
 package dao;
 import java.sql.SQLException;
 import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Communication;
 
@@ -17,6 +19,7 @@ public class CommunicationDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Communication> getAllCommunication() throws SQLException
 	{
 		try
@@ -38,11 +41,13 @@ public class CommunicationDao extends HibernateDaoSupport
 	 * @param Communication
 	 * @return
 	 */
+	@Transactional
 	public String saveCommunication(Communication Communication) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Communication);
+			this.getHibernateTemplate().flush();
 			return "success";
 		}
 		catch(Exception e)

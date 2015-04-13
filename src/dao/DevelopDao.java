@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Develop;
 
@@ -18,6 +19,7 @@ public class DevelopDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Develop> getAllDevelop() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class DevelopDao extends HibernateDaoSupport
 	 * @param Develop
 	 * @return
 	 */
+	@Transactional
 	public String saveDevelop(Develop Develop) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Develop);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

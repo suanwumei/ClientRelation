@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.ClientManager;
 
@@ -18,6 +19,7 @@ public class ClientManagerDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<ClientManager> getAllClientManager() throws SQLException
 	{
 		
@@ -40,11 +42,13 @@ public class ClientManagerDao extends HibernateDaoSupport
 	 * @param ClientManager
 	 * @return
 	 */
+	@Transactional
 	public String saveClientManager(ClientManager ClientManager) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(ClientManager);
+			this.getHibernateTemplate().flush();
 			return "success";
 		}
 		catch(Exception e)
@@ -60,6 +64,7 @@ public class ClientManagerDao extends HibernateDaoSupport
 	 * @param password
 	 * @return
 	 */
+	@Transactional
 	public String getClientManagerByNameAndPassword(String name, String password) throws SQLException
 	{
 		try
@@ -87,6 +92,7 @@ public class ClientManagerDao extends HibernateDaoSupport
 	 * @param name
 	 * @return
 	 */
+	@Transactional
 	public ClientManager getClientManagerByName(String name)
 	{
 		try

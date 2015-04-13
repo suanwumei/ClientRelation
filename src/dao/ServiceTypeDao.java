@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.ServiceType;
 
@@ -18,6 +19,7 @@ public class ServiceTypeDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<ServiceType> getAllServiceType() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class ServiceTypeDao extends HibernateDaoSupport
 	 * @param ServiceType
 	 * @return
 	 */
+	@Transactional
 	public String saveServiceType(ServiceType ServiceType) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(ServiceType);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

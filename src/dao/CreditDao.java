@@ -1,7 +1,9 @@
 package dao;
 import java.sql.SQLException;
 import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Credit;
 
@@ -17,6 +19,7 @@ public class CreditDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Credit> getAllCredit() throws SQLException
 	{
 		try
@@ -38,11 +41,14 @@ public class CreditDao extends HibernateDaoSupport
 	 * @param Credit
 	 * @return
 	 */
+	@Transactional
 	public String saveCredit(Credit Credit) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Credit);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

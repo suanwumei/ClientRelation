@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Order;
 
@@ -18,6 +19,7 @@ public class OrderDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Order> getAllOrder() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class OrderDao extends HibernateDaoSupport
 	 * @param Order
 	 * @return
 	 */
+	@Transactional
 	public String saveOrder(Order Order) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Order);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

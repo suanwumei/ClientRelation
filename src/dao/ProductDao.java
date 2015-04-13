@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Product;
 
@@ -18,6 +19,7 @@ public class ProductDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Product> getAllProduct() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class ProductDao extends HibernateDaoSupport
 	 * @param Product
 	 * @return
 	 */
+	@Transactional
 	public String saveProduct(Product Product) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Product);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

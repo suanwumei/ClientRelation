@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Loss;
 
@@ -18,6 +19,7 @@ public class LossDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Loss> getAllLoss() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class LossDao extends HibernateDaoSupport
 	 * @param Loss
 	 * @return
 	 */
+	@Transactional
 	public String saveLoss(Loss Loss) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Loss);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

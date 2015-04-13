@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Satisfaction;
 
@@ -18,6 +19,7 @@ public class SatisfactionDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Satisfaction> getAllSatisfaction() throws SQLException
 	{
 		try
@@ -39,11 +41,14 @@ public class SatisfactionDao extends HibernateDaoSupport
 	 * @param Satisfaction
 	 * @return
 	 */
+	@Transactional
 	public String saveSatisfaction(Satisfaction Satisfaction) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Satisfaction);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)

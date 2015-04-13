@@ -2,7 +2,10 @@ package dao;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
+
 import domain.Contact;
 
 /**
@@ -17,6 +20,7 @@ public class ContactDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Contact> getAllContact() throws SQLException
 	{
 		try
@@ -38,11 +42,13 @@ public class ContactDao extends HibernateDaoSupport
 	 * @param Contact
 	 * @return
 	 */
+	@Transactional
 	public String saveContact(Contact Contact) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(Contact);
+			this.getHibernateTemplate().flush();
 			return "success";
 		}
 		catch(Exception e)

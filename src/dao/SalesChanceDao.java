@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.SalesChance;
 
@@ -19,6 +20,7 @@ public class SalesChanceDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<SalesChance> getAllSalesChance() throws SQLException
 	{
 		try
@@ -40,11 +42,14 @@ public class SalesChanceDao extends HibernateDaoSupport
 	 * @param SalesChance
 	 * @return
 	 */
+	@Transactional
 	public String saveSalesChance(SalesChance salesChance) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(salesChance);
+			this.getHibernateTemplate().flush();
+			
 			return "success";
 		}
 		catch(Exception e)
@@ -58,6 +63,7 @@ public class SalesChanceDao extends HibernateDaoSupport
 	 * 查询所有未分配销售机会
 	 * @return
 	 */
+	@Transactional
 	public List<SalesChance> getSalesChanceNotApp()
 	{
 		try
@@ -86,14 +92,15 @@ public class SalesChanceDao extends HibernateDaoSupport
 	 * @param salesChance
 	 * @return
 	 */
+	@Transactional
 	public String updateSalesChance(SalesChance salesChance)
 	{
 		System.out.println("salesChance in dao"+salesChance.getClientName());
 		try
 		{
-		//	this.getHibernateTemplate().update(salesChance);
-			this.getSession().update(salesChance);
-			this.getSession().flush();
+			this.getHibernateTemplate().update(salesChance);	
+			this.getHibernateTemplate().flush();
+			
 
 			return "success";
 		}
@@ -108,6 +115,7 @@ public class SalesChanceDao extends HibernateDaoSupport
 	 * @param salesChanceId
 	 * @return
 	 */
+	@Transactional
 	public SalesChance getSalesChanceById(int salesChanceId)
 	{
 		try
