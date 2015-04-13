@@ -3,6 +3,7 @@ package action;
 import java.sql.SQLException;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -25,6 +26,7 @@ public class ClientManagerAction
 	 * 客户经理登录
 	 * @return
 	 */
+	@Transactional
 	public String clientManagerLogin()
 	{
 		String username=ServletActionContext.getRequest().getParameter("username");

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -35,6 +36,7 @@ public class SalesChanceAction
 	 * 创建销售机会
 	 * @return
 	 */
+	@Transactional
 	public String salseChanceCreate()
 	{
 		ActionContext ctx=ActionContext.getContext();
@@ -110,6 +112,7 @@ public class SalesChanceAction
 	 * 预将跳转至新增销售机会页面
 	 * @return
 	 */
+	@Transactional
 	public String salesChanceToCreate()
 	{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
@@ -123,6 +126,7 @@ public class SalesChanceAction
 	 * 进入销售机会管理页面
 	 * @return
 	 */
+	@Transactional
 	public String salesChanceToCenter()
 	{				
 		List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
@@ -136,6 +140,7 @@ public class SalesChanceAction
 	 * 进入销售机会修改页面
 	 * @return
 	 */
+	@Transactional
 	public String salesChanceToModify()
 	{			
 		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
@@ -158,6 +163,7 @@ public class SalesChanceAction
 	 * 修改销售机会
 	 * @return
 	 */
+	@Transactional
 	public String salesChanceModify()
 	{			
 		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
