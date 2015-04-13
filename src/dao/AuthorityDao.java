@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Authority;
 
@@ -11,6 +12,7 @@ import domain.Authority;
  * @author admin
  *
  */
+
 public class AuthorityDao extends HibernateDaoSupport
 {
 	/**
@@ -18,6 +20,7 @@ public class AuthorityDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Authority> getAllAuthority() throws SQLException
 	{
 		
@@ -25,7 +28,7 @@ public class AuthorityDao extends HibernateDaoSupport
 		{
 			@SuppressWarnings("unchecked")
 			List<Authority> AuthorityList=this.getHibernateTemplate().find("from Authority");
-			
+			this.getHibernateTemplate().flush();
 			return AuthorityList;
 		}
 		catch(Exception e)
@@ -45,6 +48,7 @@ public class AuthorityDao extends HibernateDaoSupport
 		try
 		{
 			this.getHibernateTemplate().save(Authority);
+			this.getHibernateTemplate().flush();
 			return "success";
 		}
 		catch(Exception e)
