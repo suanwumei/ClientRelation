@@ -43,6 +43,7 @@ public class AuthorityDao extends HibernateDaoSupport
 	 * @param Authority
 	 * @return
 	 */
+	@Transactional
 	public String saveAuthority(Authority Authority) throws SQLException
 	{
 		try
