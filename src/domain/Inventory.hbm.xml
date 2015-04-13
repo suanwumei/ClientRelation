@@ -1,0 +1,21 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="Inventory" table="Inventory">  
+		<id name="inventoryId" type="java.lang.Integer" column="inventoryId">
+			<generator class="increment"/>  
+		</id>  
+		<many-to-one name="inventoryProduct" cascade="all" class="Product" column="productId"/>
+		
+		<property name="inventoryStore" type="java.lang.String" column="inventoryStore"/>			
+		<property name="inventoryGoodsAllocation" type="java.lang.String" column="inventoryGoodsAllocation"/>			
+		<property name="inventoryNumber" type="java.lang.String" column="inventoryNumber"/>			
+		<property name="inventoryPs" type="java.lang.String" column="inventoryPs"/>		
+						
+	</class>  
+ 
+</hibernate-mapping>  

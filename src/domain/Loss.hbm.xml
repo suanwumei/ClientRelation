@@ -1,0 +1,18 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="Loss" table="Loss">  
+		<id name="lossId" type="java.lang.Integer" column="lossId">
+			<generator class="increment"/>  
+		</id>  
+		<many-to-one name="tempLoss" cascade="all" class="TempLoss" column="tempLossId"/>
+		
+		<property name="lossReason" type="java.lang.String" column="lossReason"/>			
+			
+	</class>  
+ 
+</hibernate-mapping>  

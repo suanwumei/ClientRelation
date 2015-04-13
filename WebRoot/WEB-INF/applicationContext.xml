@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<!-- 数据库配置 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml">
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>domain.*.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 关于DAO层的sessionFactory注入 -->
+	<bean id="areaDao" class="dao.AreaDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="authorityDao" class="dao.AuthorityDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="clientDao" class="dao.ClientDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="clientManagerDao" class="dao.ClientManagerDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="communicationDao" class="dao.CommunicationDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="contactDao" class="dao.ContactDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	
+	<bean id="creditDao" class="dao.CreditDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="developDao" class="dao.DevelopDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	
+	<bean id="highManagerDao" class="dao.HighManagerDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	
+	<bean id="inventoryDao" class="dao.InventoryDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="levelDao" class="dao.LevelDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="lossDao" class="dao.LossDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="orderDao" class="dao.OrderDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="orderItemDao" class="dao.OrderItemDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="productDao" class="dao.ProductDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="salesChanceDao" class="dao.SalesChanceDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="salesManagerDao" class="dao.SalesManagerDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="satisfactionDao" class="dao.SatisfactionDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="serviceDao" class="dao.ServiceDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="serviceTypeDao" class="dao.ServiceTypeDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	<bean id="tempLossDao" class="dao.TempLossDao">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>	
+	</bean>
+	
+	
+	<!-- 关于ACTION层的DAO注入 -->
+	<bean id="clientManagerAction" class="action.ClientManagerAction">
+		<property name="clientManagerDao">
+			<ref local="clientManagerDao" />
+		</property>	
+	</bean>
+	<bean id="salesChanceAction" class="action.SalesChanceAction">
+		<property name="salesChanceDao">
+			<ref local="salesChanceDao" />
+		</property>
+		<property name="clientManagerDao">
+			<ref local="clientManagerDao" />
+		</property>
+		<property name="clientDao">
+			<ref local="clientDao" />
+		</property>
+		<property name="contactDao">
+			<ref local="contactDao" />
+		</property>
+	</bean>
+
+</beans>

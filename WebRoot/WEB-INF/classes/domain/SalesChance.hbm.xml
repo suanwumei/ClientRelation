@@ -1,0 +1,35 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="SalesChance" table="salesChance">  
+		<id name="salesChanceId" type="java.lang.Integer" column="salesChanceId">
+			<generator class="increment"/>  
+		</id>  
+		<property name="salesChanceSource" type="java.lang.String" column="salesChanceSource"/>			
+		<property name="salesChanceSuccessRate" type="java.lang.String" column="salesChanceSuccessRate"/>			
+		<property name="clientName" type="java.lang.String" column="clientName"/>			
+		<property name="salesChanceOutline" type="java.lang.String" column="salesChanceOutline"/>			
+		<property name="contactName" type="java.lang.String" column="contactName"/>			
+		<property name="contactTel" type="java.lang.String" column="contactTel"/>			
+		<property name="salesChanceDescribe" type="java.lang.String" column="salesChanceDescribe"/>
+		<property name="createTime" type="java.lang.String" column="createTime"/>
+		<property name="appointTime" type="java.lang.String" column="appointTime"/>
+		<property name="assignOrNot" type="java.lang.String" column="assignOrNot"/>
+		<property name="salesChanceStatus" type="java.lang.String" column="salesChanceStatus"/>
+		
+		<many-to-one name="clientManagerCreater" cascade="all" class="ClientManager" column="clientManagerId"/>
+		<many-to-one name="salesManagerCreater" cascade="all" class="SalesManager" column="salesManagerCreaterId"/>
+		<many-to-one name="salesChanceAppoint" cascade="all" class="SalesManager" column="salesChanceAppointId"/>
+		
+		<set name="develops" inverse="true">
+			<key column="salesChanceId"/>
+			<one-to-many class="Develop"/>
+		</set>		
+			
+	</class>  
+ 
+</hibernate-mapping>  

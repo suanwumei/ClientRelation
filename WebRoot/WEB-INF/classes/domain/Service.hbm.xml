@@ -1,0 +1,29 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="Service" table="service">  
+		<id name="serviceId" type="java.lang.Integer" column="serviceId">
+			<generator class="increment"/>  
+		</id>  
+		<many-to-one name="serviceType" cascade="all" class="ServiceType" column="serviceTypeId"/>
+		<many-to-one name="client" cascade="all" class="Client" column="clientId"/>
+		<many-to-one name="servicecCreater" cascade="all" class="ClientManager" column="servicecCreaterId"/>	
+		<many-to-one name="allocatePerson" cascade="all" class="ClientManager" column="allocatePerson"/>	
+		<many-to-one name="satisfaction" cascade="all" class="Satisfaction" column="satisfaction"/>	
+		
+		<property name="serviceOutline" type="java.lang.String" column="serviceOutline"/>			
+		<property name="serviceState" type="java.lang.String" column="serviceState"/>			
+		<property name="serviceRequest" type="java.lang.String" column="serviceRequest"/>			
+		<property name="createTime" type="java.lang.String" column="createTime"/>			
+		<property name="allocateTime" type="java.lang.String" column="allocateTime"/>			
+		<property name="serviceProcess" type="java.lang.String" column="serviceProcess"/>			
+		<property name="processTime" type="java.lang.String" column="processTime"/>			
+		<property name="processResult" type="java.lang.String" column="processResult"/>			
+			
+	</class>  
+ 
+</hibernate-mapping>  

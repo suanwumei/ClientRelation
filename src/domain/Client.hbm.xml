@@ -1,0 +1,49 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="Client" table="Client">  
+		<id name="clientId" type="java.lang.Integer" column="clientId">
+			<generator class="increment"/>  
+		</id>  		
+		<property name="clientName" type="java.lang.String" column="clientName"/>			
+		<property name="clientAddress" type="java.lang.String" column="clientAddress"/>			
+		<property name="clientPost" type="java.lang.String" column="clientPost"/>			
+		<property name="clientTel" type="java.lang.String" column="clientTel"/>			
+		<property name="clientFax" type="java.lang.String" column="clientFax"/>			
+		<property name="clientWeb" type="java.lang.String" column="clientWeb"/>			
+		<property name="clientLicense" type="java.lang.String" column="clientLicense"/>	
+		<property name="clientLegal" type="java.lang.String" column="clientLegal"/>			
+		<property name="clientCapital" type="java.lang.String" column="clientCapital"/>			
+		<property name="clientRevenue" type="java.lang.String" column="clientRevenue"/>		
+		<property name="clientBank" type="java.lang.String" column="clientBank"/>			
+		<property name="clientAccount" type="java.lang.String" column="clientAccount"/>		
+		<property name="clientLandTax" type="java.lang.String" column="clientLandTax"/>			
+		<property name="clientNationalTax" type="java.lang.String" column="clientNationalTax"/>			
+		<property name="clientLose" type="java.lang.String" column="clientLose"/>			
+		
+		<many-to-one name="clientArea" cascade="all" class="Area" column="areaId"/>
+		<many-to-one name="clientLevel" cascade="all" class="Level" column="levelId"/>
+		<many-to-one name="clientSatisfaction" cascade="all" class="Satisfaction" column="satisfactionId"/>
+		<many-to-one name="clientCredit" cascade="all" class="Credit" column="creditId"/>
+		<many-to-one name="clientManager" not-null="true" class="ClientManager" column="clientManagerId"/>
+	
+		<set name="contactList" table="contact">
+			<key column="clientId"/>
+			<one-to-many class="Contact"/>
+		</set>
+		<set name="commuList" table="communication">
+			<key column="clientId"/>
+			<one-to-many class="Communication"/>
+		</set>
+		<set name="orderList" table="order">
+			<key column="clientId"/>
+			<one-to-many class="Order"/>
+		</set>	
+			
+	</class>  
+ 
+</hibernate-mapping>  

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="ServiceType" table="ServiceType">  
+		<id name="serviceTypeId" type="java.lang.Integer" column="serviceTypeId">
+			<generator class="increment"/>  
+		</id>  
+		<property name="serviceName" type="java.lang.String" column="serviceName"/>			
+			
+	</class>  
+ 
+</hibernate-mapping>  

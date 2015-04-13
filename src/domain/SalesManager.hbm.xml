@@ -1,0 +1,19 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="SalesManager" table="SalesManager">  
+		<id name="salesManagerId" type="java.lang.Integer" column="salesManagerId">
+			<generator class="increment"/>  
+		</id>  
+		<property name="salesManagerName" type="java.lang.String" column="salesManagerName"/>			
+		<property name="password" type="java.lang.String" column="password"/>		
+		
+		<many-to-one name="authority" cascade="all" class="Authority" column="authorityId"/>		
+			
+	</class>  
+ 
+</hibernate-mapping>  

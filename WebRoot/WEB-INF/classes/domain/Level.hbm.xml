@@ -1,0 +1,16 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="Level" table="level">  
+		<id name="levelId" type="java.lang.Integer" column="levelId">
+			<generator class="increment"/>  
+		</id>  
+		<property name="levelName" type="java.lang.String" column="levelName"/>			
+			
+	</class>  
+ 
+</hibernate-mapping>  

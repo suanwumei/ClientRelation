@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory>
+   	<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  	<property name="hibernate.connection.password">admin</property>
+  	<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/client_relation?useUnicode=true&amp;characterEncoding=UTF-8</property>
+  	<property name="hibernate.connection.username">admin</property>
+	<property name="current_session_context_class">thread</property>
+	<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  	<property name="hbm2ddl.auto">update</property>
+  	<property name="show_sql">true</property>
+  	<property name="hibernate.connection.autocommit">true</property>
+  	<property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+ 	<property name="hibernate.cache.use_second_level_cache">false</property>
+  	<property name="hibernate.cache.use_query_cache">false</property> 
+  	
+  	<mapping class="domain.Area" resource="domain/Area.hbm.xml"/>  
+  	<mapping class="domain.Authority" resource="domain/Authority.hbm.xml"/>  
+  	<mapping class="domain.Client" resource="domain/Client.hbm.xml"/>  
+  	<mapping class="domain.ClientManager" resource="domain/ClientManager.hbm.xml"/>  			
+  	<mapping class="domain.Communication" resource="domain/Communication.hbm.xml"/>  
+  	<mapping class="domain.Contact" resource="domain/Contact.hbm.xml"/>    		
+ 	<mapping class="domain.Credit" resource="domain/Credit.hbm.xml"/>  
+  	<mapping class="domain.Develop" resource="domain/Develop.hbm.xml"/>  
+  	<mapping class="domain.HighManager" resource="domain/HighManager.hbm.xml"/>  
+  	<mapping class="domain.Inventory" resource="domain/Inventory.hbm.xml"/>  
+   	<mapping class="domain.Level" resource="domain/Level.hbm.xml"/>  
+  	<mapping class="domain.Loss" resource="domain/Loss.hbm.xml"/>  	
+  	<mapping class="domain.Order" resource="domain/Order.hbm.xml"/>    		
+  	<mapping class="domain.OrderItem" resource="domain/OrderItem.hbm.xml"/>    		  		
+  	<mapping class="domain.Product" resource="domain/Product.hbm.xml"/>  
+  	<mapping class="domain.SalesChance" resource="domain/SalesChance.hbm.xml"/>  
+  	<mapping class="domain.SalesManager" resource="domain/SalesManager.hbm.xml"/>    		  		
+  	<mapping class="domain.Satisfaction" resource="domain/Satisfaction.hbm.xml"/> 
+  	<mapping class="domain.Service" resource="domain/Service.hbm.xml"/> 		 		 
+  	<mapping class="domain.ServiceType" resource="domain/ServiceType.hbm.xml"/>  
+  	<mapping class="domain.TempLoss" resource="domain/TempLoss.hbm.xml"/>  
+  	
+ </session-factory>
+</hibernate-configuration>

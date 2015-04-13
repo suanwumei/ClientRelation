@@ -1,0 +1,20 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="Contact" table="contact">  
+		<id name="contactId" type="java.lang.Integer" column="contactId">
+			<generator class="increment"/>  
+		</id>   			
+		<property name="contactName" type="java.lang.String" column="contactName"/>			
+		<property name="contactGender" type="java.lang.String" column="contactGender"/>			
+		<property name="contactPosition" type="java.lang.String" column="contactPosition"/>			
+		<property name="contactTel" type="java.lang.String" column="contactTel"/>			
+		<property name="contactPs" type="java.lang.String" column="contactPs"/>			
+			
+	</class>  
+ 
+</hibernate-mapping>  

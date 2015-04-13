@@ -1,0 +1,19 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="Order" table="Orders">  
+		<id name="orderId" type="java.lang.Integer" column="orderId">
+			<generator class="increment"/>  
+		</id>   			
+		<property name="orderTime" type="java.lang.String" column="orderTime"/>			
+		<property name="orderMoney" type="java.lang.Integer" column="orderMoney"/>			
+		<property name="orderAddress" type="java.lang.String" column="orderAddress"/>			
+		<property name="orderState" type="java.lang.String" column="orderState"/>			
+			
+	</class>  
+ 
+</hibernate-mapping>  

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">  
+  
+<hibernate-mapping package="domain">  
+
+	<class name="OrderItem" table="OrderItem">  
+		<id name="orderItemId" type="java.lang.Integer" column="orderItemId">
+			<generator class="increment"/>  
+		</id>  
+		<many-to-one name="product" cascade="all" class="Product" column="productId"/>
+		
+		<property name="productCount" type="java.lang.Integer" column="productCount"/>			
+		<property name="itemTotalMoney" type="java.lang.Integer" column="itemTotalMoney"/>			
+			
+	</class>  
+ 
+</hibernate-mapping>  
