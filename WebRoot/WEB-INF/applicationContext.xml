@@ -31,6 +31,7 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
 	
 	<!-- 关于DAO层的sessionFactory注入 -->
 	<bean id="areaDao" class="dao.AreaDao">
