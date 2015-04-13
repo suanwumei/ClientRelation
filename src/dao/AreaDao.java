@@ -3,6 +3,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import domain.Area;
 
@@ -18,13 +19,14 @@ public class AreaDao extends HibernateDaoSupport
 	 * @return
 	 * @throws SQLException
 	 */
+	@Transactional
 	public List<Area> getAllArea() throws SQLException
 	{
 		try
 		{
 			@SuppressWarnings("unchecked")
 			List<Area> areaList=this.getHibernateTemplate().find("from Area");
-			
+			this.getHibernateTemplate().flush();
 			return areaList;
 		}
 		catch(Exception e)
@@ -39,11 +41,13 @@ public class AreaDao extends HibernateDaoSupport
 	 * @param area
 	 * @return
 	 */
+	@Transactional
 	public String saveArea(Area area) throws SQLException
 	{
 		try
 		{
 			this.getHibernateTemplate().save(area);
+			this.getHibernateTemplate().flush();
 			return "success";
 		}
 		catch(Exception e)
