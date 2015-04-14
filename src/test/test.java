@@ -33,13 +33,16 @@ public class test {
 		Area area = new Area();  		
 		area.setAreaName("LXT hello");
 		Authority authority=new Authority();
-		authority.setAuthorityName("4");
+		authority.setAuthorityName("销售主管");
+		
 		Client client=new Client();
 		client.setClientAccount("100");
+		
 		ClientManager clientManager=new ClientManager();
 		clientManager.setAuthority(authority);
 		clientManager.setPassword("1");
-		clientManager.setClientManagerName("a");
+		clientManager.setClientManagerName("c");
+		
 		Communication communication=new Communication();		
 		communication.setCommuDetail("真是很重要的感觉");
 		Contact contact=new Contact();
@@ -64,8 +67,10 @@ public class test {
 		product.setProductModel("什么模型");
 		SalesChance salesChance=new SalesChance();
 		salesChance.setAssignOrNot("否");
+		
 		SalesManager salesManager=new SalesManager();
-		salesManager.setPassword("123456");
+		salesManager.setPassword("1");
+		
 		Service service=new Service();
 		service.setAllocateTime("2011-02-02");
 		Satisfaction satisfaction=new Satisfaction();
@@ -74,7 +79,8 @@ public class test {
 		serviceType.setServiceName("超级服务");
 		TempLoss tempLoss=new TempLoss();
 		tempLoss.setLossComfirm("是啊");
-		Configuration cfg = new Configuration();  
+		
+		Configuration cfg = new Configuration();		
 		@SuppressWarnings("deprecation")
 		SessionFactory cf = cfg.configure().buildSessionFactory();  
 		Session session = cf.openSession();  
@@ -82,7 +88,7 @@ public class test {
 		
 	//	session.save(area);
 	//	session.save(authority);  
-		session.save(client);	
+	//	session.save(client);	
 	//	session.save(clientManager);	
 	//	session.save(communication); 
 	//	session.save(contact);

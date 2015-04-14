@@ -14,8 +14,10 @@ import dao.ClientDao;
 import dao.ClientManagerDao;
 import dao.ContactDao;
 import dao.SalesChanceDao;
+import dao.SalesManagerDao;
 import domain.ClientManager;
 import domain.SalesChance;
+import domain.SalesManager;
 
 /**
  * 销售机会相关操作
@@ -29,6 +31,7 @@ public class SalesChanceAction
 
 	private SalesChanceDao salesChanceDao;	
 	private ClientManagerDao clientManagerDao;
+	private SalesManagerDao salesManagerDao;
 	private ClientDao clientDao;
 	private ContactDao contactDao;
 	
@@ -55,6 +58,7 @@ public class SalesChanceAction
 		try 
 		{
 			ClientManager clientManager=new ClientManager();
+			SalesManager salesManager=new SalesManager();
 			
 			SalesChance salesChance=new SalesChance();
 			salesChance.setAssignOrNot("0");
@@ -64,6 +68,12 @@ public class SalesChanceAction
 				clientManager=clientManagerDao.getClientManagerByName(createName);
 				salesChance.setClientManagerCreater(clientManager);
 			}
+			else if(authority.equals("3"))
+			{
+				salesManager=salesManagerDao.getSalesManagerByName(createName);
+				salesChance.setSalesManagerCreater(salesManager);
+			}
+				
 			salesChance.setClientName(clientName);
 			
 			salesChance.setContactName(contactName);
@@ -93,7 +103,12 @@ public class SalesChanceAction
 			
 			String resultStr1=salesChanceDao.saveSalesChance(salesChance).toString();		
 			if(resultStr1.equals("success"))	
+			{
+				List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
+				ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+				
 				return SUCCESS;
+			}
 			else
 				return FAILED;
 			
@@ -131,7 +146,7 @@ public class SalesChanceAction
 	{				
 		List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
 		ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
-		
+
 		return SUCCESS;
 
 	}
@@ -188,7 +203,122 @@ public class SalesChanceAction
 		
 		String str=salesChanceDao.updateSalesChance(salesChance);
 		if(str.equals("success"))
+		{
+			List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
+			ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+			
 			return SUCCESS;
+		}
+		else
+			return FAILED;
+
+	}
+	
+	/**
+	 * 删除销售机会
+	 * @return
+	 */
+	@Transactional
+	public String salesChanceDelete()
+	{			
+		ActionContext ctx=ActionContext.getContext();
+		String userName=(String) ctx.getSession().get("username");
+		
+		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
+		SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
+		
+		String createName=null;				
+		if(salesChance.getClientManagerCreater()!=null)
+			createName=salesChance.getClientManagerCreater().getClientManagerName();
+		else
+			createName=salesChance.getSalesManagerCreater().getSalesManagerName();
+		
+		String resultStr="failed";
+		if(userName.equals(createName))
+			resultStr=salesChanceDao.deleteSalesChanceById(salesChanceId);
+		
+		if(resultStr.equals("success"))
+		{
+			List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
+			ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+			
+			return SUCCESS;
+		}
+		else
+			return FAILED;
+
+	}
+	
+	/**
+	 * 转到指派销售机会页面
+	 * @return
+	 */
+	@Transactional
+	public String salesChanceToAppoint()
+	{			
+		ActionContext ctx=ActionContext.getContext();
+		String authority=(String) ctx.getSession().get("authority");		
+		
+		if(authority.equals("3"))
+		{
+			int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
+			SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
+			
+			if(salesChance.getClientManagerCreater()!=null)
+				ServletActionContext.getRequest().setAttribute("createNames", 
+						salesChance.getClientManagerCreater().getClientManagerName());
+			else 
+				ServletActionContext.getRequest().setAttribute("createNames", 
+						salesChance.getSalesManagerCreater().getSalesManagerName().toString());
+
+			List<ClientManager> clientManagerList;
+			
+			try {
+				clientManagerList = clientManagerDao.getAllClientManager();
+				ServletActionContext.getRequest().setAttribute("clientManagerList",clientManagerList);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+			ServletActionContext.getRequest().setAttribute("appintTime", df.format(new Date()));
+			
+			ServletActionContext.getRequest().setAttribute("salesChance", salesChance);
+			
+			return SUCCESS;
+			
+		}
+		else 
+			return FAILED;		
+
+	}
+	
+	/**
+	 * 指派销售机会
+	 * @return
+	 */
+	@Transactional
+	public String salesChanceAppoint()
+	{			
+		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
+		SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
+		
+		int clientManagerId=Integer.parseInt(ServletActionContext.getRequest().getParameter("clientManagerId"));
+		ClientManager clientManager=clientManagerDao.getClientManagerById(clientManagerId);
+		
+		salesChance.setSalesChanceAppoint(clientManager);
+		salesChance.setAssignOrNot("1");
+		
+		String str=salesChanceDao.updateSalesChance(salesChance);
+		if(str.equals("success"))
+		{
+			List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
+			ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+			
+			return SUCCESS;
+		}
 		else
 			return FAILED;
 
@@ -248,6 +378,20 @@ public class SalesChanceAction
 	 */
 	public void setContactDao(ContactDao contactDao) {
 		this.contactDao = contactDao;
+	}
+
+	/**
+	 * @return the salesManagerDao
+	 */
+	public SalesManagerDao getSalesManagerDao() {
+		return salesManagerDao;
+	}
+
+	/**
+	 * @param salesManagerDao the salesManagerDao to set
+	 */
+	public void setSalesManagerDao(SalesManagerDao salesManagerDao) {
+		this.salesManagerDao = salesManagerDao;
 	}
 
 }

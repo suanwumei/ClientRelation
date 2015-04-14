@@ -19,7 +19,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="create new sales chance">
 
   </head>
-  
+  <script language="javascript">
+
+	function check(){
+	var name1 = document.getElementById("clientName").value;
+	var name2 = document.getElementById("salesChanceSuccessRate").value;
+	var name3 = document.getElementById("salesChanceOutline").value;
+		
+	if(name1==""||name2==""||name3=="")
+	{
+		alert("请将信息填写完整");
+		return;
+	}
+	else
+		alert("修改成功");
+	document.forms[0].submit();
+	
+	}
+
+  </script>
   <body>
     <form action="salesChanceModify">
     <table>
@@ -42,13 +60,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>客户名称</label>
     	</td>
     	<td>
-    	<input name="clientName" value="${requestScope.salesChance.clientName}"/><label style="color:red">*</label>
+    	<input name="clientName" value="${requestScope.salesChance.clientName}" id="clientName"/><label style="color:red">*</label>
     	</td>
     	<td>
     	<label>成功几率</label>
     	</td>
     	<td>
-    	<input name="salesChanceSuccessRate" value="${requestScope.salesChance.salesChanceSuccessRate}"/><label style="color:red">*</label>
+    	<input name="salesChanceSuccessRate" value="${requestScope.salesChance.salesChanceSuccessRate}" id="salesChanceSuccessRate"/><label style="color:red">*</label>
     	</td>
     </tr>
     <tr>
@@ -56,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>概要</label>
     	</td>
     	<td>
-    	<input name="salesChanceOutline" value="${requestScope.salesChance.salesChanceOutline}"/><label style="color:red">*</label>
+    	<input name="salesChanceOutline" value="${requestScope.salesChance.salesChanceOutline}" id="salesChanceOutline"/><label style="color:red">*</label>
     	</td>
     	<td/><td/>
     </tr>
@@ -113,7 +131,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </tr>
     <tr>
     	<td>
-    	<button type="submit">保存</button>
+    	<button onclick="check()">保存</button>
 		</td>
     	<td/><td/><td/><td/>
     </tr>

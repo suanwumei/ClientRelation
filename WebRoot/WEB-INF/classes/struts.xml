@@ -7,10 +7,10 @@
 	<package name="struts" extends="struts-default" namespace="">
 		<action name="login" class="action.ClientManagerAction" method="clientManagerLogin">
 			<result name="success">/center.jsp</result>
-			<result name="failed">/index.jsp</result>
+			<result name="failed">/login.jsp</result>
 		</action>
 		<action name="salseChanceCreate" class="action.SalesChanceAction" method="salseChanceCreate">
-			<result name="success">/login.jsp</result>
+			<result name="success">/saleschance_center.jsp</result>
 			<result name="failed">/index.jsp</result>
 		</action>
 		<action name="salesChanceToCreate" class="action.SalesChanceAction" method="salesChanceToCreate">
@@ -26,7 +26,19 @@
 			<result name="failed">/index.jsp</result>
 		</action>
 		<action name="salesChanceModify" class="action.SalesChanceAction" method="salesChanceModify">
-			<result name="success">/index.jsp</result>
+			<result name="success">/saleschance_center.jsp</result>
+			<result name="failed">/index.jsp</result>
+		</action>
+		<action name="salesChanceDelete" class="action.SalesChanceAction" method="salesChanceDelete">
+			<result name="success">/saleschance_center.jsp</result>
+			<result name="failed">/index.jsp</result>
+		</action>
+		<action name="salesChanceToAppoint" class="action.SalesChanceAction" method="salesChanceToAppoint">
+			<result name="success">/saleschance_appoint.jsp</result>
+			<result name="failed">/index.jsp</result>
+		</action>
+		<action name="salesChanceAppoint" class="action.SalesChanceAction" method="salesChanceAppoint">
+			<result name="success">/saleschance_center.jsp</result>
 			<result name="failed">/index.jsp</result>
 		</action>
 	</package>

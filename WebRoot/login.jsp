@@ -19,7 +19,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 
   </head>
-  
+  <script language="javascript">
+
+	function check(){
+	var name1 = document.getElementById("userName").value;
+	var name2 = document.getElementById("password").value;
+	var name3 = document.getElementById("authority").value;
+		
+	if(name1==""||name2==""||name3=="")
+	{
+		alert("请将信息填写完整");
+		return;
+	}
+	
+	document.forms[0].submit();
+	
+	}
+
+  </script>
   <body>
   	<form action="login">
   	 <table>
@@ -28,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	 		<label>用户名</label>
   	 		</td>
   	 		<td>
-  	 		<input name="username"/>
+  	 		<input name="username" id="userName"/>
   	 		</td>
 		</tr>	
 		<tr>
@@ -36,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	 		<label>密码</label>
   	 		</td>
   	 		<td>
-  	 		<input name="password"/>
+  	 		<input name="password" id="password"/>
   	 		</td>
 		</tr>
 		<tr>
@@ -44,13 +61,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	 		<label>身份</label>
   	 		</td>
   	 		<td>
-  	 		<input name="authority"/>  	 		
+  	 		<select name="authority">  
+  	 		<option value="1">系统管理员</option>  
+  	 		<option value="2">高管</option>  
+  	 		<option value="3">销售主管</option>  
+  	 		<option value="4">客户经理</option>  
+  	 			
+  	 		</select> 		
   	 		</td>
 		</tr>
 		<tr>
 			<td></td>
 			<td>
-			<button type="submit">登陆</button>
+			<button onclick="check()">登陆</button>
 			</td>			
 		</tr>
 	 </table>

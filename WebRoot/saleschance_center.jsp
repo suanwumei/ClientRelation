@@ -20,7 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 
   </head>
-  
   <body>
 	<a href='salesChanceToCreate'>新建销售机会</a>	
 	<table>
@@ -42,7 +41,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>${s.contactTel}</td>
 			<td>${s.createTime}</td>			
 			<td>
-			<a href='salesChanceToModify?salesChanceId=${s.salesChanceId}'>修改</a></td>
+			<a href='salesChanceToModify?salesChanceId=${s.salesChanceId}'>修改</a>
+			<a href="javascript:void(0);" onclick="if(window.confirm('确定删除该销售机会吗？'))
+			this.href='salesChanceDelete?salesChanceId=${s.salesChanceId}'">删除</a>
+			<a href='salesChanceToAppoint?salesChanceId=${s.salesChanceId}'>指派</a>
+			
+			</td>
 		</tr>
 		</c:forEach>
 	

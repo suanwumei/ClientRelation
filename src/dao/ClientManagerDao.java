@@ -1,10 +1,8 @@
 package dao;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
-
 import domain.ClientManager;
 
 /**
@@ -108,6 +106,25 @@ public class ClientManagerDao extends HibernateDaoSupport
 				return man.get(0);
 			else
 				return null;
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * 根据ClientManagerId查询销售机会
+	 * @param clientManagerId
+	 * @return
+	 */
+	@Transactional
+	public ClientManager getClientManagerById(int clientManagerId)
+	{
+		try
+		{	
+			return (ClientManager) this.getSession().get(ClientManager.class, clientManagerId);
 		}
 		catch(Exception e)
 		{

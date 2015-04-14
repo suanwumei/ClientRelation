@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.opensymphony.xwork2.ActionContext;
 
 import dao.ClientManagerDao;
+import dao.SalesManagerDao;
 import domain.ClientManager;
+import domain.SalesManager;
 
 /**
  * 关于客户经理的操作以及响应
@@ -21,6 +23,7 @@ public class ClientManagerAction
 	private static final String FAILED="failed";
 	
 	private ClientManagerDao clientManagerDao;
+	private SalesManagerDao salesManagerDao;	
 	
 	/**
 	 * 客户经理登录
@@ -35,7 +38,9 @@ public class ClientManagerAction
 		String authority=ServletActionContext.getRequest().getParameter("authority");
 
 		String clientManagerName=null;
+		String salesManagerName=null;
 		ClientManager clientManager=null;
+		SalesManager salesManager=null;
 		System.out.println(username);
 		System.out.println(password);
 		System.out.println(authority);
@@ -45,7 +50,7 @@ public class ClientManagerAction
 			if(authority.equals("4")){
 			
 			clientManagerName=clientManagerDao.getClientManagerByNameAndPassword(username, password);
-			}
+			
 			if(clientManagerName==null)
 				return FAILED;
 			else
@@ -58,6 +63,25 @@ public class ClientManagerAction
 				
 				return SUCCESS;
 			}
+			}
+			else if(authority.equals("3"))
+			{
+				salesManagerName=salesManagerDao.getSalesManagerByNameAndPassword(username, password);
+				
+				if(salesManagerName==null)
+					return FAILED;
+				else
+				{
+					salesManager=salesManagerDao.getSalesManagerByName(salesManagerName);
+					ActionContext ctx=ActionContext.getContext();
+					ctx.getSession().put("user", salesManager);
+					ctx.getSession().put("username", salesManager.getSalesManagerName());				
+					ctx.getSession().put("authority", authority);
+					
+					return SUCCESS;
+				}
+			}
+		
 		} 
 		catch (SQLException e) 
 		{
@@ -82,6 +106,19 @@ public class ClientManagerAction
 	public void setClientManagerDao(ClientManagerDao clientManagerDao) {
 		this.clientManagerDao = clientManagerDao;
 	}
-	
+
+	/**
+	 * @return the salesManagerDao
+	 */
+	public SalesManagerDao getSalesManagerDao() {
+		return salesManagerDao;
+	}
+
+	/**
+	 * @param salesManagerDao the salesManagerDao to set
+	 */
+	public void setSalesManagerDao(SalesManagerDao salesManagerDao) {
+		this.salesManagerDao = salesManagerDao;
+	}
 
 }

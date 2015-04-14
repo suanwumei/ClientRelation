@@ -21,9 +21,9 @@
 		<property name="assignOrNot" type="java.lang.String" column="assignOrNot"/>
 		<property name="salesChanceStatus" type="java.lang.String" column="salesChanceStatus"/>
 		
-		<many-to-one name="clientManagerCreater" cascade="all" class="ClientManager" column="clientManagerId"/>
-		<many-to-one name="salesManagerCreater" cascade="all" class="SalesManager" column="salesManagerCreaterId"/>
-		<many-to-one name="salesChanceAppoint" cascade="all" class="SalesManager" column="salesChanceAppointId"/>
+		<many-to-one name="clientManagerCreater" class="ClientManager" column="clientManagerId"/>
+		<many-to-one name="salesManagerCreater" class="SalesManager" column="salesManagerCreaterId"/>
+		<many-to-one name="salesChanceAppoint" class="ClientManager" column="salesChanceAppointId"/>
 		
 		<set name="develops" inverse="true">
 			<key column="salesChanceId"/>

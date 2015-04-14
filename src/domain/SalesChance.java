@@ -66,9 +66,9 @@ public class SalesChance
 	private String createTime;
 	
 	/**
-	 * 分配指向的销售经理
+	 * 分配指向的客户经理
 	 */
-	private SalesManager salesChanceAppoint;
+	private ClientManager salesChanceAppoint;
 	
 	/**
 	 * 分配时间
@@ -97,7 +97,7 @@ public class SalesChance
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	/**
 	 * @param salesChanceId
 	 * @param salesChanceSource
@@ -121,7 +121,7 @@ public class SalesChance
 			String salesChanceOutline, String contactName, String contactTel,
 			String salesChanceDescribe, ClientManager clientManagerCreater,
 			SalesManager salesManagerCreater, String createTime,
-			SalesManager salesChanceAppoint, String appointTime,
+			ClientManager salesChanceAppoint, String appointTime,
 			String assignOrNot, String salesChanceStatus, Set<Develop> develops) {
 		super();
 		this.salesChanceId = salesChanceId;
@@ -294,21 +294,23 @@ public class SalesChance
 	 */
 	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
-	}
+	}	
 
 	/**
 	 * @return the salesChanceAppoint
 	 */
-	public SalesManager getSalesChanceAppoint() {
+	public ClientManager getSalesChanceAppoint() {
 		return salesChanceAppoint;
 	}
+
 
 	/**
 	 * @param salesChanceAppoint the salesChanceAppoint to set
 	 */
-	public void setSalesChanceAppoint(SalesManager salesChanceAppoint) {
+	public void setSalesChanceAppoint(ClientManager salesChanceAppoint) {
 		this.salesChanceAppoint = salesChanceAppoint;
 	}
+
 
 	/**
 	 * @return the appointTime

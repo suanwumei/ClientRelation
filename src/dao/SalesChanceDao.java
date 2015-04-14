@@ -1,11 +1,9 @@
 package dao;
+
 import java.sql.SQLException;
 import java.util.List;
-
-import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
-
 import domain.SalesChance;
 
 /**
@@ -95,12 +93,10 @@ public class SalesChanceDao extends HibernateDaoSupport
 	@Transactional
 	public String updateSalesChance(SalesChance salesChance)
 	{
-		System.out.println("salesChance in dao"+salesChance.getClientName());
 		try
 		{
 			this.getHibernateTemplate().update(salesChance);	
-			this.getHibernateTemplate().flush();
-			
+			this.getHibernateTemplate().flush();			
 
 			return "success";
 		}
@@ -128,6 +124,51 @@ public class SalesChanceDao extends HibernateDaoSupport
 		}
 		
 	}
+	
+	/**
+	 * 删除销售机会
+	 * @param salesChance
+	 * @return
+	 */
+	@Transactional
+	public String deleteSalesChance(SalesChance salesChance)
+	{
+		try
+		{	
+			this.getSession().delete(salesChance);
+			this.getSession().flush();
+			
+			return "success";
+		}
+		catch(Exception e)
+		{
+			return "error occurs when execute query...";
+		}		
+		
+	}
+	
+	/**
+	 * 根据SalesChanceId删除销售机会
+	 * @param salesChance
+	 * @return
+	 */
+	@Transactional
+	public String deleteSalesChanceById(int salesChanceId)
+	{
+		try
+		{	
+			this.getSession().delete(this.getSalesChanceById(salesChanceId));
+			this.getSession().flush();
+			
+			return "success";
+		}
+		catch(Exception e)
+		{
+			return "error occurs when execute query...";
+		}		
+		
+	}
+	
 	
 }
 
