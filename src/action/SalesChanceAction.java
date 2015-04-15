@@ -302,6 +302,15 @@ public class SalesChanceAction
 			
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 			ServletActionContext.getRequest().setAttribute("appintTime", df.format(new Date()));
+			if(salesChance.getClientManagerCreater()!=null)
+			{
+				ServletActionContext.getRequest().setAttribute("createName", salesChance.getClientManagerCreater().getClientManagerName());
+			}
+			else
+			{
+				ServletActionContext.getRequest().setAttribute("createName", salesChance.getSalesManagerCreater().getSalesManagerName());
+				
+			}
 			
 			ServletActionContext.getRequest().setAttribute("salesChance", salesChance);
 			
