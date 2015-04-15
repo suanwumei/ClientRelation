@@ -150,6 +150,7 @@
 			<ref local="clientManagerDao" />
 		</property>	
 	</bean>
+	
 	<bean id="salesChanceAction" class="action.SalesChanceAction">
 		<property name="salesChanceDao">
 			<ref local="salesChanceDao" />
@@ -162,6 +163,21 @@
 		</property>
 		<property name="contactDao">
 			<ref local="contactDao" />
+		</property>
+	</bean>
+	
+	<bean id="userAction" class="action.UserAction">
+		<property name="clientManagerDao">
+			<ref local="clientManagerDao" />
+		</property>
+		<property name="salesManagerDao">
+			<ref local="salesManagerDao" />
+		</property>
+		<property name="highManagerDao">
+			<ref local="highManagerDao" />
+		</property>
+		<property name="authorityDao">
+			<ref local="authorityDao" />
 		</property>
 	</bean>
 

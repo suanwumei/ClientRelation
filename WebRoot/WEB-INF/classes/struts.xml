@@ -5,41 +5,43 @@
 	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
 	
 	<package name="struts" extends="struts-default" namespace="">
-		<action name="login" class="action.ClientManagerAction" method="clientManagerLogin">
-			<result name="success">/center.jsp</result>
-			<result name="failed">/login.jsp</result>
+		<action name="createSalseChance" class="action.SalesChanceAction" method="createSalesChance">
+			<result name="clientManager">/salesChanceManageForClientManager.jsp</result>
+			<result name="salesManager">/salesChanceManageForSalesManager.jsp</result>
+			<result name="failed">/error.jsp</result>
 		</action>
-		<action name="salseChanceCreate" class="action.SalesChanceAction" method="salseChanceCreate">
-			<result name="success">/saleschance_center.jsp</result>
-			<result name="failed">/index.jsp</result>
+		<action name="salesChanceManage" class="action.SalesChanceAction" method="salesChanceManage">
+			<result name="clientManager">/salesChanceManageForClientManager.jsp</result>
+			<result name="salesManager">/salesChanceManageForSalesManager.jsp</result>
+			<result name="failed">/error.jsp</result>
 		</action>
-		<action name="salesChanceToCreate" class="action.SalesChanceAction" method="salesChanceToCreate">
-			<result name="success">/saleschance_new.jsp</result>
-			<result name="failed">/index.jsp</result>
+		<action name="modifySalesChance" class="action.SalesChanceAction" method="modifySalesChance">
+			<result name="success">/modifySalesChance.jsp</result>
+			<result name="failed">/error.jsp</result>
 		</action>
-		<action name="salesChanceToCenter" class="action.SalesChanceAction" method="salesChanceToCenter">
-			<result name="success">/saleschance_center.jsp</result>
-			<result name="failed">/index.jsp</result>
+		<action name="commitModifySalesChance" class="action.SalesChanceAction" method="commitModifySalesChance">
+			<result name="clientManager">/salesChanceManageForClientManager.jsp</result>
+			<result name="salesManager">/salesChanceManageForSalesManager.jsp</result>
+			<result name="failed">/error.jsp</result>
 		</action>
-		<action name="salesChanceToModify" class="action.SalesChanceAction" method="salesChanceToModify">
-			<result name="success">/saleschance_modify.jsp</result>
-			<result name="failed">/index.jsp</result>
+		<action name="deleteSalesChance" class="action.SalesChanceAction" method="deleteSalesChance">
+			<result name="clientManager">/salesChanceManageForClientManager.jsp</result>
+			<result name="salesManager">/salesChanceManageForSalesManager.jsp</result>
+			<result name="failed">/error.jsp</result>
 		</action>
-		<action name="salesChanceModify" class="action.SalesChanceAction" method="salesChanceModify">
-			<result name="success">/saleschance_center.jsp</result>
-			<result name="failed">/index.jsp</result>
+		<action name="appointSalesChance" class="action.SalesChanceAction" method="appointSalesChance">
+			<result name="success">/appointSalesChance.jsp</result>
+			<result name="failed">/error.jsp</result>
 		</action>
-		<action name="salesChanceDelete" class="action.SalesChanceAction" method="salesChanceDelete">
-			<result name="success">/saleschance_center.jsp</result>
-			<result name="failed">/index.jsp</result>
+		<action name="commitAppointSalesChance" class="action.SalesChanceAction" method="commitAppointSalesChance">
+			<result name="salesManager">/salesChanceManageForSalesManager.jsp</result>
+			<result name="failed">/error.jsp</result>
 		</action>
-		<action name="salesChanceToAppoint" class="action.SalesChanceAction" method="salesChanceToAppoint">
-			<result name="success">/saleschance_appoint.jsp</result>
-			<result name="failed">/index.jsp</result>
-		</action>
-		<action name="salesChanceAppoint" class="action.SalesChanceAction" method="salesChanceAppoint">
-			<result name="success">/saleschance_center.jsp</result>
-			<result name="failed">/index.jsp</result>
+		<action name="userLogin" class="action.UserAction" method="userLogin">
+			<result name="clientManager">/clientManagerCenter.jsp</result>
+			<result name="salesManager">/salesManagerCenter.jsp</result>
+			<result name="highManager">/highManagerCenter.jsp</result>
+			<result name="failed">error.jsp</result>
 		</action>
 	</package>
 </struts>    

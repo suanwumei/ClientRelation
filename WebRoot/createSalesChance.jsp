@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ page import="java.text.SimpleDateFormat"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -32,27 +33,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		return;
 	}
 	else
-		alert("修改成功");
+		alert("添加成功");
 	document.forms[0].submit();
 	
 	}
 
   </script>
   <body>
-    <form action="salesChanceModify">
-    <table>
+  <%
+  	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+	String createTime=df.format(new Date());	
+   %>
+    <form action="createSalseChance">
+    <table  border="1">
     <tr>
     	<td>
-    	<label>编号</label>
+    	<label style="color:gray">编号</label>
     	</td>
     	<td>
-    	<input name="salesChanceId" value="${requestScope.salesChance.salesChanceId}" readonly/>
+    	<input name="salesChanceId" readonly/>
     	</td>
     	<td>
     	<label>机会来源</label>
     	</td>
     	<td>
-    	<input name="salesChanceSource" value="${requestScope.salesChance.salesChanceSource}"/>
+    	<input name="salesChanceSource"/>
     	</td>
     </tr>
     <tr>
@@ -60,13 +65,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>客户名称</label>
     	</td>
     	<td>
-    	<input name="clientName" value="${requestScope.salesChance.clientName}" id="clientName"/><label style="color:red">*</label>
+    	<input name="clientName" id="clientName"/><label style="color:red">*</label>
     	</td>
     	<td>
     	<label>成功几率</label>
     	</td>
     	<td>
-    	<input name="salesChanceSuccessRate" value="${requestScope.salesChance.salesChanceSuccessRate}" id="salesChanceSuccessRate"/><label style="color:red">*</label>
+    	<input name="salesChanceSuccessRate" id="salesChanceSuccessRate"/><label style="color:red">*</label>
     	</td>
     </tr>
     <tr>
@@ -74,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>概要</label>
     	</td>
     	<td>
-    	<input name="salesChanceOutline" value="${requestScope.salesChance.salesChanceOutline}" id="salesChanceOutline"/><label style="color:red">*</label>
+    	<input name="salesChanceOutline" id="salesChanceOutline"/><label style="color:red">*</label>
     	</td>
     	<td/><td/>
     </tr>
@@ -83,13 +88,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>联系人</label>
     	</td>
     	<td>
-    	<input name="contactName" value="${requestScope.salesChance.contactName}"/>
+    	<input name="contactName"/>
     	</td>
     	<td>
     	<label>联系电话</label>
     	</td>
     	<td>
-    	<input name="contactTel" value="${requestScope.salesChance.contactTel}"/>
+    	<input name="contactTel"/>
     	</td>
     </tr>
     <tr>
@@ -97,7 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>机会描述</label>
     	</td>
     	<td>
-    	<input name="salesChanceDescribe" value="${requestScope.salesChance.salesChanceDescribe}"/>
+    	<input name="salesChanceDescribe"/>
     	</td>
     	<td/><td/>
     </tr>
@@ -106,13 +111,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<label>创建人</label>
     	</td>
     	<td>
-    	<input name="createName" value="${requestScope.createNames}" readonly/><label style="color:red">*</label>
+    	<input name="createName" value="${sessionScope.username}" readonly/><label style="color:red">*</label>
     	</td>
     	<td>
     	<label>创建时间</label>
     	</td>
     	<td>
-    	<input name="createTime" value="${requestScope.salesChance.createTime}" readonly/><label style="color:red">*</label>
+    	<input name="createTime" value=<%=createTime %> readonly/><label style="color:red">*</label>
     	</td>
     </tr>
     <tr>

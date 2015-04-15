@@ -3,6 +3,7 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="s" uri="/struts-tags"%>
  
@@ -21,8 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </head>
   <body>
-	<a href='salesChanceToCreate'>新建销售机会</a>	
-	<table>
+	<table  border="1">
 		<tr>
 			<td>编号</td>
 			<td>客户名称</td>
@@ -30,6 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>联系人</td>
 			<td>联系人电话</td>
 			<td>创建时间</td>
+			<td>状态</td>
 			<td>操作</td>
 		</tr>
 		<c:forEach items="${requestScope.salesChanceNoAppList}" var="s">
@@ -39,13 +40,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<td>${s.salesChanceOutline}</td>
 			<td>${s.contactName}</td>
 			<td>${s.contactTel}</td>
-			<td>${s.createTime}</td>			
+			<td>${s.createTime}</td>
 			<td>
-			<a href='salesChanceToModify?salesChanceId=${s.salesChanceId}'>修改</a>
-			<a href="javascript:void(0);" onclick="if(window.confirm('确定删除该销售机会吗？'))
-			this.href='salesChanceDelete?salesChanceId=${s.salesChanceId}'">删除</a>
-			<a href='salesChanceToAppoint?salesChanceId=${s.salesChanceId}'>指派</a>
-			
+				<c:choose>
+				<c:when test="${s.assignOrNot=='0'}">
+					未指派
+				</c:when>
+				<c:when test="${s.assignOrNot=='1'}">
+ 					开发中
+				</c:when>
+				</c:choose>
+			</td>			
+			<td>
+				<a href='modifySalesChance?salesChanceId=${s.salesChanceId}'>修改</a>
+			<c:choose>
+				<c:when test="${s.salesManagerCreater.salesManagerId==sessionScope.user.salesManagerId}">
+					<a href="javascript:void(0);" onclick="if(window.confirm('确定删除该销售机会吗？'))
+					this.href='deleteSalesChance?salesChanceId=${s.salesChanceId}'">删除</a>
+				</c:when>
+			</c:choose>
+			<a href='appointSalesChance?salesChanceId=${s.salesChanceId}'>指派</a>
 			</td>
 		</tr>
 		</c:forEach>

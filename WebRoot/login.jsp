@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
   </script>
   <body>
-  	<form action="login">
+  	<form action="userLogin">
   	 <table>
   	 	<tr>
   	 		<td>

@@ -15,6 +15,7 @@ import dao.ClientManagerDao;
 import dao.ContactDao;
 import dao.SalesChanceDao;
 import dao.SalesManagerDao;
+import domain.Authority;
 import domain.ClientManager;
 import domain.SalesChance;
 import domain.SalesManager;
@@ -40,10 +41,10 @@ public class SalesChanceAction
 	 * @return
 	 */
 	@Transactional
-	public String salseChanceCreate()
+	public String createSalesChance()
 	{
 		ActionContext ctx=ActionContext.getContext();
-		String authority=(String) ctx.getSession().get("authority");
+		Authority authority=(Authority) ctx.getSession().get("authority");
 		
 		String salesChanceSource=(String) ServletActionContext.getRequest().getParameter("salesChanceSource");
 		String clientName=(String) ServletActionContext.getRequest().getParameter("clientName");
@@ -61,20 +62,23 @@ public class SalesChanceAction
 			SalesManager salesManager=new SalesManager();
 			
 			SalesChance salesChance=new SalesChance();
-			salesChance.setAssignOrNot("0");
 			
-			if(authority.equals("4"))//客户经理
+			/**
+			 * 客户经理创建销售机会
+			 */
+			if(authority.getAuthorityId()==4)
 			{
 				clientManager=clientManagerDao.getClientManagerByName(createName);
 				salesChance.setClientManagerCreater(clientManager);
 			}
-			else if(authority.equals("3"))
+			else if(authority.getAuthorityId()==3)
 			{
 				salesManager=salesManagerDao.getSalesManagerByName(createName);
 				salesChance.setSalesManagerCreater(salesManager);
 			}
 				
 			salesChance.setClientName(clientName);
+			salesChance.setAssignOrNot("0");
 			
 			salesChance.setContactName(contactName);
 			salesChance.setContactTel(contactTel);
@@ -84,30 +88,26 @@ public class SalesChanceAction
 			salesChance.setSalesChanceSource(salesChanceSource);
 			salesChance.setSalesChanceSuccessRate(salesChanceSuccessRate);
 			
-			/*	//保存客户以及联系人
-			Contact contact = new Contact();
-			contact.setContactName(contactName);
-			contact.setContactTel(contactTel);
-
-			Client client= new Client();
-			client.setClientName(clientName);
-			client.setClientManager(clientManager);
-			
-			Set<Contact> contactList = new HashSet<Contact>();
-			contactList.add(contact);
-			client.setContactList(contactList);
-			
-			clientDao.saveClient(client);
-			contactDao.saveContact(contact);
-			*/
-			
 			String resultStr1=salesChanceDao.saveSalesChance(salesChance).toString();		
 			if(resultStr1.equals("success"))	
 			{
 				List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
 				ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+				/**
+				 * 销售主管
+				 */
+				if(authority.getAuthorityId()==3)
+				{
+					return "salesManager";
+				}
+				/**
+				 * 客户经理
+				 */
+				else
+				{
+					return "clientManager";
+				}
 				
-				return SUCCESS;
 			}
 			else
 				return FAILED;
@@ -122,41 +122,48 @@ public class SalesChanceAction
 		return null;
 		
 	}
-
-	/**
-	 * 预将跳转至新增销售机会页面
-	 * @return
-	 */
-	@Transactional
-	public String salesChanceToCreate()
-	{
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-		ServletActionContext.getRequest().setAttribute("createTime", df.format(new Date()));
-		
-		return SUCCESS;
-	
-	}
 	
 	/**
 	 * 进入销售机会管理页面
 	 * @return
 	 */
 	@Transactional
-	public String salesChanceToCenter()
-	{				
-		List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
-		ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
-
-		return SUCCESS;
+	public String salesChanceManage()
+	{		
+		try
+		{
+			List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
+			ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+			Authority authority=(Authority) ActionContext.getContext().getSession().get("authority");
+			/**
+			 * 销售主管
+			 */
+			if(authority.getAuthorityId()==3)
+			{
+				return "salesManager";
+			}
+			/**
+			 * 客户经理
+			 */
+			else
+			{
+				return "clientManager";
+			}
+		}
+		catch(Exception e)
+		{
+			return "failed";
+		}
 
 	}
+
 	
 	/**
 	 * 进入销售机会修改页面
 	 * @return
 	 */
 	@Transactional
-	public String salesChanceToModify()
+	public String modifySalesChance()
 	{			
 		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
 		SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
@@ -179,14 +186,14 @@ public class SalesChanceAction
 	 * @return
 	 */
 	@Transactional
-	public String salesChanceModify()
+	public String commitModifySalesChance()
 	{			
 		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
 		SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
 		
 		String salesChanceSource=(String) ServletActionContext.getRequest().getParameter("salesChanceSource");
 		String clientName=(String) ServletActionContext.getRequest().getParameter("clientName");	
-		System.out.println("clientName:"+clientName);
+		
 		String salesChanceSuccessRate=(String) ServletActionContext.getRequest().getParameter("salesChanceSuccessRate");		
 		String salesChanceOutline=(String) ServletActionContext.getRequest().getParameter("salesChanceOutline");
 		String contactName=(String) ServletActionContext.getRequest().getParameter("contactName");		
@@ -204,10 +211,31 @@ public class SalesChanceAction
 		String str=salesChanceDao.updateSalesChance(salesChance);
 		if(str.equals("success"))
 		{
-			List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
-			ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+			try
+			{
+				List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
+				ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+				Authority authority=(Authority) ActionContext.getContext().getSession().get("authority");
+				/**
+				 * 销售主管
+				 */
+				if(authority.getAuthorityId()==3)
+				{
+					return "salesManager";
+				}
+				/**
+				 * 客户经理
+				 */
+				else
+				{
+					return "clientManager";
+				}
+			}
+			catch(Exception e)
+			{
+				return FAILED;
+			}
 			
-			return SUCCESS;
 		}
 		else
 			return FAILED;
@@ -219,30 +247,38 @@ public class SalesChanceAction
 	 * @return
 	 */
 	@Transactional
-	public String salesChanceDelete()
+	public String deleteSalesChance()
 	{			
-		ActionContext ctx=ActionContext.getContext();
-		String userName=(String) ctx.getSession().get("username");
-		
 		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
-		SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
-		
-		String createName=null;				
-		if(salesChance.getClientManagerCreater()!=null)
-			createName=salesChance.getClientManagerCreater().getClientManagerName();
-		else
-			createName=salesChance.getSalesManagerCreater().getSalesManagerName();
 		
 		String resultStr="failed";
-		if(userName.equals(createName))
-			resultStr=salesChanceDao.deleteSalesChanceById(salesChanceId);
-		
+		resultStr=salesChanceDao.deleteSalesChanceById(salesChanceId);
 		if(resultStr.equals("success"))
 		{
-			List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
-			ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
-			
-			return SUCCESS;
+			try
+			{
+				List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
+				ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
+				Authority authority=(Authority) ActionContext.getContext().getSession().get("authority");
+				/**
+				 * 销售主管
+				 */
+				if(authority.getAuthorityId()==3)
+				{
+					return "salesManager";
+				}
+				/**
+				 * 客户经理
+				 */
+				else
+				{
+					return "clientManager";
+				}
+			}
+			catch(Exception e)
+			{
+				return FAILED;
+			}
 		}
 		else
 			return FAILED;
@@ -254,33 +290,15 @@ public class SalesChanceAction
 	 * @return
 	 */
 	@Transactional
-	public String salesChanceToAppoint()
+	public String appointSalesChance()
 	{			
-		ActionContext ctx=ActionContext.getContext();
-		String authority=(String) ctx.getSession().get("authority");		
-		
-		if(authority.equals("3"))
+		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
+		try
 		{
-			int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
 			SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
-			
-			if(salesChance.getClientManagerCreater()!=null)
-				ServletActionContext.getRequest().setAttribute("createNames", 
-						salesChance.getClientManagerCreater().getClientManagerName());
-			else 
-				ServletActionContext.getRequest().setAttribute("createNames", 
-						salesChance.getSalesManagerCreater().getSalesManagerName().toString());
-
 			List<ClientManager> clientManagerList;
-			
-			try {
-				clientManagerList = clientManagerDao.getAllClientManager();
-				ServletActionContext.getRequest().setAttribute("clientManagerList",clientManagerList);
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			clientManagerList = clientManagerDao.getAllClientManager();
+			ServletActionContext.getRequest().setAttribute("clientManagerList",clientManagerList);
 			
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 			ServletActionContext.getRequest().setAttribute("appintTime", df.format(new Date()));
@@ -288,10 +306,11 @@ public class SalesChanceAction
 			ServletActionContext.getRequest().setAttribute("salesChance", salesChance);
 			
 			return SUCCESS;
-			
 		}
-		else 
-			return FAILED;		
+		catch(Exception e)
+		{
+			return FAILED;
+		}	
 
 	}
 	
@@ -300,7 +319,7 @@ public class SalesChanceAction
 	 * @return
 	 */
 	@Transactional
-	public String salesChanceAppoint()
+	public String commitAppointSalesChance()
 	{			
 		int salesChanceId=Integer.parseInt(ServletActionContext.getRequest().getParameter("salesChanceId"));
 		SalesChance salesChance=salesChanceDao.getSalesChanceById(salesChanceId);
@@ -317,7 +336,7 @@ public class SalesChanceAction
 			List<SalesChance> salesChanceNoAppList=salesChanceDao.getSalesChanceNotApp();	
 			ServletActionContext.getRequest().setAttribute("salesChanceNoAppList", salesChanceNoAppList);
 			
-			return SUCCESS;
+			return "salesManager";
 		}
 		else
 			return FAILED;

@@ -58,6 +58,25 @@ public class AuthorityDao extends HibernateDaoSupport
 		}
 		
 	}
+	
+	/**
+	 * 根据Id得到Authority对象
+	 * @param authorityId
+	 * @return
+	 */
+	@Transactional
+	public Authority getAuthorityById(int authorityId)
+	{
+		try
+		{
+			return (Authority) this.getSession().get(Authority.class, authorityId);
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+		
+	}
 
 	
 }
