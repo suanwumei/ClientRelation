@@ -25,7 +25,7 @@
 		<many-to-one name="salesManagerCreater" class="SalesManager" column="salesManagerCreaterId"/>
 		<many-to-one name="salesChanceAppoint" class="ClientManager" column="salesChanceAppointId"/>
 		
-		<set name="develops" inverse="true">
+		<set name="develops" inverse="false" fetch="join" table="develop">
 			<key column="salesChanceId"/>
 			<one-to-many class="Develop"/>
 		</set>		

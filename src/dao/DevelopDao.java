@@ -57,6 +57,61 @@ public class DevelopDao extends HibernateDaoSupport
 		}
 		
 	}	
+	
+	/**
+	 * 删除销售机会
+	 * @param developId
+	 */
+	@Transactional
+	public String deleteDevelop(int developId)
+	{
+		try
+		{
+			Develop develop=this.getHibernateTemplate().get(Develop.class, developId);
+			this.getSession().delete(develop);
+			this.getSession().flush();
+			
+			return "success";
+		}
+		catch(Exception e)
+		{
+			return "error occurs when execute query...";
+		}
+		
+	}
+	
+	/**
+	 * 根据Id得到销售机会
+	 * @param developId
+	 * @return
+	 */
+	@Transactional
+	public Develop getDevelopById(int developId)
+	{
+		try
+		{
+			return (Develop) this.getSession().get(Develop.class, developId);
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public String updateDevelop(Develop develop)
+	{
+		try
+		{
+			 this.getSession().update(develop);
+			 this.getSession().flush();
+			 
+			 return "success";
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+	}
 
 }
 

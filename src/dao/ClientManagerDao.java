@@ -1,9 +1,13 @@
 package dao;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.hibernate.Query;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
+
 import domain.ClientManager;
+import domain.SalesChance;
 
 /**
  * 关于ClientManager类的数据库操作
@@ -115,7 +119,7 @@ public class ClientManagerDao extends HibernateDaoSupport
 	}
 	
 	/**
-	 * 根据ClientManagerId查询销售机会
+	 * 根据ClientManagerId查询客户经理
 	 * @param clientManagerId
 	 * @return
 	 */
@@ -128,6 +132,35 @@ public class ClientManagerDao extends HibernateDaoSupport
 		}
 		catch(Exception e)
 		{
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * 找到属于客户经理的所有的已分配的但未完成的销售机会
+	 * @param clientManager
+	 * @return
+	 */
+	@Transactional
+	public List<SalesChance> getAppointAndUnfinishSalesChance(ClientManager clientManager)
+	{
+		try
+		{
+			String queryString = "from SalesChance salesChance where salesChance.salesChanceAppoint=:clientManager and salesChance.salesChanceStatus=:status"; 
+			Query query = this.getSession().createQuery(queryString); 
+			query.setParameter("clientManager", clientManager);
+			query.setParameter("status", "开发中");
+			
+			@SuppressWarnings("unchecked")
+			List<SalesChance> salesChanceList=query.list();
+			
+			return salesChanceList;
+	
+		}
+		catch(Exception e)
+		{
+			System.out.println("执行过了");
 			return null;
 		}
 		

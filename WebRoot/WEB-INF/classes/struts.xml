@@ -43,5 +43,41 @@
 			<result name="highManager">/highManagerCenter.jsp</result>
 			<result name="failed">error.jsp</result>
 		</action>
+		<action name="viewAppointedSalesChance" class="action.SalesChanceAction" method="viewAppointedSalesChance">
+			<result name="success">/viewAppointedSalesChance.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
+		<action name="viewSalesChanceForDevelop" class="action.DevelopAction" method="viewSalesChanceForDevelop">
+			<result name="success">/viewSalesChanceForDevelop.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
+		<action name="saveDevelop" class="action.DevelopAction" method="saveDevelop">
+			<result name="success">/viewSalesChanceForDevelop.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
+		<action name="deleteDevelop" class="action.DevelopAction" method="deleteDevelop">
+			<result name="success">/viewSalesChanceForDevelop.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>		
+		<action name="updateDevelop" class="action.DevelopAction" method="updateDevelop">
+			<result name="success">/viewSalesChanceForDevelop.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
+		<action name="executeDevelop" class="action.DevelopAction" method="executeDevelop">
+			<result name="success">/executeDevelop.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
+		<action name="saveDevelopResult" class="action.DevelopAction" method="saveDevelopResult">
+			<result name="success">/executeDevelop.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
+		<action name="developSuccess" class="action.DevelopAction" method="developSuccess">
+			<result name="success">/viewAppointedSalesChance.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
+		<action name="developFailed" class="action.DevelopAction" method="developFailed">
+			<result name="success">/viewAppointedSalesChance.jsp</result>
+			<result name="failed">/error.jsp</result>
+		</action>
 	</package>
 </struts>    

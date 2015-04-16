@@ -1,5 +1,6 @@
 package action;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,15 +40,18 @@ public class SalesChanceAction
 	/**
 	 * 创建销售机会
 	 * @return
+	 * @throws UnsupportedEncodingException 
 	 */
 	@Transactional
-	public String createSalesChance()
+	public String createSalesChance() throws UnsupportedEncodingException
 	{
 		ActionContext ctx=ActionContext.getContext();
 		Authority authority=(Authority) ctx.getSession().get("authority");
 		
-		String salesChanceSource=(String) ServletActionContext.getRequest().getParameter("salesChanceSource");
-		String clientName=(String) ServletActionContext.getRequest().getParameter("clientName");
+		String clientName=new String(ServletActionContext.getRequest().getParameter("clientName").getBytes("ISO-8859-1"),"UTF-8");
+		String salesChanceSource=new String(ServletActionContext.getRequest().getParameter("salesChanceSource").getBytes("ISO-8859-1"),"UTF-8");
+//		String salesChanceSource=(String) ServletActionContext.getRequest().getParameter("salesChanceSource");
+//		String clientName=(String) ServletActionContext.getRequest().getParameter("clientName");
 		String salesChanceSuccessRate=(String) ServletActionContext.getRequest().getParameter("salesChanceSuccessRate");
 		String salesChanceOutline=(String) ServletActionContext.getRequest().getParameter("salesChanceOutline");
 		String contactName=(String) ServletActionContext.getRequest().getParameter("contactName");
@@ -78,6 +82,7 @@ public class SalesChanceAction
 			}
 				
 			salesChance.setClientName(clientName);
+			System.out.println(clientName);
 			salesChance.setAssignOrNot("0");
 			
 			salesChance.setContactName(contactName);
@@ -338,6 +343,7 @@ public class SalesChanceAction
 		
 		salesChance.setSalesChanceAppoint(clientManager);
 		salesChance.setAssignOrNot("1");
+		salesChance.setSalesChanceStatus("开发中");
 		
 		String str=salesChanceDao.updateSalesChance(salesChance);
 		if(str.equals("success"))
@@ -350,6 +356,28 @@ public class SalesChanceAction
 		else
 			return FAILED;
 
+	}
+	
+	/**
+	 * 客户经理查看分配给自己的销售机会
+	 * @return
+	 */
+	@Transactional
+	public String viewAppointedSalesChance()
+	{
+		ClientManager clientManager=(ClientManager) ActionContext.getContext().getSession().get("user");
+		List<SalesChance> salesChanceList;
+		try
+		{
+			salesChanceList=clientManagerDao.getAppointAndUnfinishSalesChance(clientManager);
+			ServletActionContext.getRequest().setAttribute("salesChanceList", salesChanceList);
+		
+			return SUCCESS;
+		}
+		catch(Exception e)
+		{
+			return FAILED;
+		}
 	}
 	
 	/**

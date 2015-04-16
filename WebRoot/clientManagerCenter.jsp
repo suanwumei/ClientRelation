@@ -27,5 +27,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <h5>当前登陆用户：${sessionScope.user.clientManagerName}，身份：${sessionScope.authority.authorityName}</h5>
     <a href='salesChanceManage'>销售机会管理</a> 
     <a href='createSalesChance.jsp'>新建销售机会</a>
+    <a href='viewAppointedSalesChance'>查看已分配任务</a>
   </body>
 </html>

@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -88,7 +89,7 @@ public class SalesChance
 	/**
 	 * 包含的开发计划
 	 */
-	private Set<Develop> develops;
+	private Set<Develop> develops=new HashSet<Develop>();
 
 	/**
 	 * 

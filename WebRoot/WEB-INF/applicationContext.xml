@@ -180,5 +180,23 @@
 			<ref local="authorityDao" />
 		</property>
 	</bean>
+	<bean id="DevelopAction" class="action.DevelopAction">
+		<property name="salesChanceDao">
+			<ref local="salesChanceDao" />
+		</property>	
+		<property name="developDao">
+			<ref local="developDao" />
+		</property>	
+		<property name="clientDao">
+			<ref local="clientDao" />
+		</property>	
+		<property name="contactDao">
+			<ref local="contactDao" />
+		</property>	
+		<property name="clientManagerDao">
+			<ref local="clientManagerDao" />
+		</property>	
+		
+	</bean>
 
 </beans>

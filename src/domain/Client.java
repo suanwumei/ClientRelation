@@ -1,5 +1,6 @@
 package domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -117,17 +118,17 @@ public class Client
 	/**
 	 * 客户的联系人列表
 	 */
-	private Set<Contact> contactList;
+	private Set<Contact> contactList=new HashSet<Contact>();
 	
 	/**
 	 * 客户交往记录
 	 */
-	private Set<Communication> commuList;
+	private Set<Communication> commuList=new HashSet<Communication>();
 	
 	/**
 	 * 客户全部订单
 	 */
-	private Set<Order> orderList;
+	private Set<Order> orderList=new HashSet<Order>();
 
 	/**
 	 * 
