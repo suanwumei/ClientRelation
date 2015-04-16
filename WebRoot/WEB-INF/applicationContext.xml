@@ -145,11 +145,6 @@
 	
 	
 	<!-- 关于ACTION层的DAO注入 -->
-	<bean id="clientManagerAction" class="action.ClientManagerAction">
-		<property name="clientManagerDao">
-			<ref local="clientManagerDao" />
-		</property>	
-	</bean>
 	
 	<bean id="salesChanceAction" class="action.SalesChanceAction">
 		<property name="salesChanceDao">
